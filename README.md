@@ -50,6 +50,7 @@ So for example a table with 3 columns Year, Region, Product each of which has 3 
 | 2023 | West   | Product A | 4200    |
 | 2023 | West   | Product B | 4700    |
 | 2023 | West   | Product C | 5200    |
+
 Will yield a simple aggregation table like this:
   
 | Year | Region | Product   | Total Revenue |
