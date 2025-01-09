@@ -219,20 +219,31 @@ By clearly distinguishing between “simple” (fully computed) and “complex�
 ## 2.3 Nested Categories
 
 In practice most source tables will be much smaller than the $O(k^n)$.
+
 This is because in practice it happens very frequently that column B is just a finer grained version of column A (A: date and B: year, A: city and B: country, ect. ) lets call this kinds of columns a nested set. 
+
 A nested set is conceptually ordered from the most coarse column (e.g. country) to the most granular column (e.g. city) potentially with columns with a medium level of granularity (e.g. region in country).
+
 In these cases it is important not to make aggregations combinations that can never happen like Country="Germany" and City="Paris", since those will vastly inflate the original table by a factor of the number of categories in the more coarse column.
+
 If we for example generate a country level aggregation for all countries for each city in our dataset , eg:
-Country="Germany" and City="Paris" 
-Country="France" and City="Paris"
-Country="Poland" and City="Paris"
-Country="Ukraine" and City="Paris"
-Country="Germany" and City="Berlin"
-Country="France" and City="Berlin"
-Country="Poland" and City="Berlin"
-Country="Ukraine" and City="Berlin"
+
+| Country   | City    |
+|-----------|---------|
+| Germany   | Paris   |
+| France    | Paris   |
+| Poland    | Paris   |
+| Ukraine   | Paris   |
+| Germany   | Berlin  |
+| France    | Berlin  |
+| Poland    | Berlin  |
+| Ukraine   | Berlin  |
+
+
 then the resulting table will have a number of rows that is equal to the number of original rows times the number of countries in the dataset.
+
 And most rows will aggregate over nothing.
+
 If the way in which column content is nested is known we can exclusively the most granular column that the user is currently filtering on for our hash and only generate cached aggregations that fit that pattern.
 
 ## Conclusion
