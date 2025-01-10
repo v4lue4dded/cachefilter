@@ -211,11 +211,12 @@ Note that this will also be much faster that directly querying a Database like p
 
 In visualizations it is very often the case that one has one display per categorical column.
 In a way similar to this visualization of the change of the global burden of disease between 2000 and 2019 along the country, sex and age categorical columns:
-![[Pasted image 20250110114901.png]]
+![Pasted image 20250110114901](https://github.com/user-attachments/assets/9e8e153a-d46f-4017-9303-ab3f94604a3e)
+
 Note that getting all of the entries of a categorical variable like country that has a of different values will take a lot of fetch requests in the one has per row format.
 Also note that a filter on a value in column A in crossfilter never changes the values that are displayed along column A (a behavior that is the same in other popular dashboarding software like PowerBI).
 For example here filtering on the United States of America lead to the numbers displayed for Sex and age to be filtered down to the values for the US but in the country table all other country values are still visible (they are greyed out a bit but that is a visual change that happens in the way it is displayed not in the crossfilter library). 
-![[Pasted image 20250110125755.png]]
+![Pasted image 20250110125755](https://github.com/user-attachments/assets/1d5b781c-1769-4d13-b63d-68a7efd7c11e)
 
 Because of this we would like to store our data in the following way:
 For each categorical column have one hash for each filtering outside that column and under that hash all of the entries for all of the values of that column such that we get hashes and that look like this:
@@ -254,7 +255,7 @@ This is because in practice it happens very frequently that column B is just a f
 
 Here an illustrative example of a nested set involving the World Region, Sub Region and country:
 
-![[Pasted image 20250110115322.png]]
+![Pasted image 20250110115322](https://github.com/user-attachments/assets/8096879b-b315-46ac-b911-3aead73f5cdb)
 
 A nested set is conceptually ordered from the most coarse column (e.g. Region) to the most granular column (e.g. country) potentially with columns with a medium level of granularity (e.g. Subregion).
 
